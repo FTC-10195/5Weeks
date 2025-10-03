@@ -17,6 +17,12 @@ import org.firstinspires.ftc.teamcode.Subsystems.Trigger;
 
 @TeleOp
 public class SubsystemBased extends LinearOpMode {
+    public enum States {
+        EJECTING,
+        INTAKING,
+        RESTING,
+        SPINNING,
+    }
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart();
