@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
-import com.arcrobotics.ftclib.controller.PIDController;
-import com.arcrobotics.ftclib.controller.PIDFController;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -16,22 +15,29 @@ public class Conveyor {
     public void setBeltstate(BeltStates newBeltState){
         currentBeltState = newBeltState;
     }
-    public BeltStates getCurrentBeltState(){
-        return currentBeltState;
-    }
-    DcMotor BeltMotor;
+    DcMotor beltMotor;
+    CRServo transferServo;
     public void initiate(HardwareMap hardwaremap){
-        BeltMotor = hardwaremap.dcMotor.get("BeltMotor");
-        BeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        beltMotor = hardwaremap.dcMotor.get("belt");
+        beltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        transferServo = hardwaremap.crservo.get("cr");
+
+
+
     }
     public void update(){
         switch(currentBeltState){
             case ON:
-                BeltMotor.setPower(0.5);
+                beltMotor.setPower(0.5);
+                transferServo.setPower(1.0);
                 break;
             case OFF:
-                BeltMotor.setPower(0.0);
+                beltMotor.setPower(0.0);
+                transferServo.setPower(0.0);
+                break;
         }
     }
 }
+
+
 

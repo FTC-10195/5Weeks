@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.OFF;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,12 +41,12 @@ public class SubsystemBased extends LinearOpMode {
             boolean RT = gamepad1.right_trigger > 0.1 && previousGamepad1.right_trigger <= 0.1;
             previousGamepad1.copy(gamepad1);
             if (LB){
-                switch (conveyor.getCurrentBeltState()){
+                switch (conveyor.currentBeltState){
                     case ON:
-                        conveyor.setBeltstate(Conveyor.BeltStates.OFF);
+                        conveyor.setBeltstate(OFF);
                         break;
                     case OFF:
-                        conveyor.setBeltstate(Conveyor.BeltStates.ON);
+                        conveyor.setBeltstate(ON);
                         break;
                 }
             }

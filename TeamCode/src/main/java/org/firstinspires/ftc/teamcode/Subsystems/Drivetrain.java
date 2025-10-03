@@ -12,10 +12,10 @@ public class Drivetrain {
 
 
     public void initiate(HardwareMap hardwareMap) {
-        frontLeftMotor = hardwareMap.dcMotor.get("motor3");
-        frontRightMotor = hardwareMap.dcMotor.get("motor2");
-        backLeftMotor = hardwareMap.dcMotor.get("motor1");
-        backRightMotor = hardwareMap.dcMotor.get("motor0");
+        frontLeftMotor = hardwareMap.dcMotor.get("motor0");
+        frontRightMotor = hardwareMap.dcMotor.get("motor1");
+        backLeftMotor = hardwareMap.dcMotor.get("motor2");
+        backRightMotor = hardwareMap.dcMotor.get("motor3");
 
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);

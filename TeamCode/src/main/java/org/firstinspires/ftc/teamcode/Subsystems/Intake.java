@@ -27,7 +27,7 @@ public class Intake {
 
 
     public void initiate(HardwareMap hardwaremap){
-        IntakeMotor = hardwaremap.dcMotor.get("IntakeMotor");
+        IntakeMotor = hardwaremap.dcMotor.get("intake");
         IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void update(){
@@ -37,8 +37,10 @@ public class Intake {
                 break;
             case OFF:
                 IntakeMotor.setPower(0.0);
+                break;
             case OUTTAKE:
                 IntakeMotor.setPower(-0.9);
+                break;
         }
     }
 }

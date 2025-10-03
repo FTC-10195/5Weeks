@@ -14,7 +14,7 @@ public class Trigger {
     long timeSnapshot = System.currentTimeMillis();
 
     public void initiate(HardwareMap hardwareMap) {
-        TriggerServo = hardwareMap.servo.get("TriggerServo");
+        TriggerServo = hardwareMap.servo.get("trigger");
     }
     public static double servoShootingPos = 0.4;
     public static double servoRestingPos = 0.5;
