@@ -42,7 +42,7 @@ public class RobotBased extends LinearOpMode {
         while (opModeIsActive()) {
             boolean LB = gamepad1.left_bumper && !previousGamepad1.left_bumper;
             boolean RB = gamepad1.right_bumper && !previousGamepad1.right_bumper;
-            boolean X = gamepad1.x && !previousGamepad1.x;
+            boolean X = gamepad1.cross && !previousGamepad1.cross;
             boolean LT = gamepad1.left_trigger > 0.1 && previousGamepad1.left_trigger <= 0.1;
             boolean RT = gamepad1.right_trigger > 0.1 && previousGamepad1.right_trigger <= 0.1;
             previousGamepad1.copy(gamepad1);
@@ -91,7 +91,7 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    flywheel.setState(Flywheel.FlywheelStates.RESTING); // adjust power
+                    flywheel.setState(Flywheel.FlywheelStates.SPINNING); // adjust power
                     conveyor.setBeltstate(Conveyor.BeltStates.ON);
                     intake.setIntakeState(Intake.IntakeState.OFF);
                     break;
@@ -100,7 +100,7 @@ public class RobotBased extends LinearOpMode {
                 case INTAKING:
                     flywheel.setState(Flywheel.FlywheelStates.RESTING);
                     conveyor.setBeltstate(Conveyor.BeltStates.ON);
-                    intake.setIntakeState(Intake.IntakeState.OFF);
+                    intake.setIntakeState(Intake.IntakeState.ON);
                     break;
 
 

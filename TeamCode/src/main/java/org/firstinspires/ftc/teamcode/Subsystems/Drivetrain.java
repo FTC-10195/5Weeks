@@ -13,13 +13,14 @@ public class Drivetrain {
 
     public void initiate(HardwareMap hardwareMap) {
         frontLeftMotor = hardwareMap.dcMotor.get("motor0");
-        frontRightMotor = hardwareMap.dcMotor.get("motor1");
+        frontRightMotor = hardwareMap.dcMotor.get("motor`1");
         backLeftMotor = hardwareMap.dcMotor.get("motor2");
+
         backRightMotor = hardwareMap.dcMotor.get("motor3");
 
 
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -28,6 +29,8 @@ public class Drivetrain {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void update(double x, double y, double rx){
+        x = -x;
+        rx = -rx;
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
