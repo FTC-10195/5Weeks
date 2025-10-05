@@ -16,7 +16,7 @@ public class Trigger {
         TriggerServo = hardwareMap.servo.get("trigger");
     }
     public static double servoShootingPos = 0.2;
-    public static double servoRestingPos = 0;
+    public static double servoRestingPos = 0.5;
 
     public void setState(ServoState newState){
         currentServoState = newState;

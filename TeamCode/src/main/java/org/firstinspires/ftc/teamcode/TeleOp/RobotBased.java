@@ -58,7 +58,7 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    if (gamepad1.right_trigger > 0.1) {
+                    if (gamepad1.right_trigger > 0.1 && flywheel.IsReady) {
                         trigger.setState(Trigger.ServoState.SHOOTING);
                     } else {
                         trigger.setState(Trigger.ServoState.RESTING);

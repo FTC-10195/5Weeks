@@ -14,10 +14,13 @@ public class Flywheel {
         SPINNING,
         RESTING,
     }
-
+    public boolean IsReady = false;
+    public long timeShot = System.currentTimeMillis();
+    public long waitTime = 1500;
 
     public FlywheelStates getFlywheelState() {
         return currentFlywheelState;
+
     }
 
 
@@ -35,6 +38,9 @@ public class Flywheel {
 
     public void setState(FlywheelStates newState) {
         currentFlywheelState = newState;
+        if (currentFlywheelState == FlywheelStates.SPINNING) {
+            timeShot = System.currentTimeMillis();
+        }
     }
 
 
@@ -42,9 +48,13 @@ public class Flywheel {
         switch (currentFlywheelState) {
             case RESTING:
                 flywheelMotor.setPower(0);
+                IsReady = false;
                 break;
             case SPINNING:
                 flywheelMotor.setPower(1);
+                if (System.currentTimeMillis() - timeShot > waitTime){
+                    IsReady = true;
+                }
                 break;
 
 

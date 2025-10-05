@@ -13,9 +13,8 @@ public class Drivetrain {
 
     public void initiate(HardwareMap hardwareMap) {
         frontLeftMotor = hardwareMap.dcMotor.get("motor0");
-        frontRightMotor = hardwareMap.dcMotor.get("motor`1");
+        frontRightMotor = hardwareMap.dcMotor.get("motor1");
         backLeftMotor = hardwareMap.dcMotor.get("motor2");
-
         backRightMotor = hardwareMap.dcMotor.get("motor3");
 
 
