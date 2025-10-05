@@ -58,8 +58,10 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    if (RT) {
+                    if (gamepad1.right_trigger > 0.1) {
                         trigger.setState(Trigger.ServoState.SHOOTING);
+                    } else {
+                        trigger.setState(Trigger.ServoState.RESTING);
                     }
                     break;
 
@@ -73,7 +75,7 @@ public class RobotBased extends LinearOpMode {
                     break;
                 case EJECTING:
                     if (X) {
-                        currentState = State.INTAKING;
+                        currentState = State.RESTING;
                     }
                     break;
 
@@ -87,6 +89,7 @@ public class RobotBased extends LinearOpMode {
                     flywheel.setState(Flywheel.FlywheelStates.RESTING);
                     intake.setIntakeState(Intake.IntakeState.OFF);
                     conveyor.setBeltstate(Conveyor.BeltStates.OFF);
+                    trigger.setState(Trigger.ServoState.RESTING);
                     break;
 
 
@@ -101,14 +104,17 @@ public class RobotBased extends LinearOpMode {
                     flywheel.setState(Flywheel.FlywheelStates.RESTING);
                     conveyor.setBeltstate(Conveyor.BeltStates.ON);
                     intake.setIntakeState(Intake.IntakeState.ON);
+                    trigger.setState(Trigger.ServoState.RESTING);
                     break;
 
 
                 case EJECTING:
                     flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                    conveyor.setBeltstate(Conveyor.BeltStates.OFF);
+                    conveyor.setBeltstate(Conveyor.BeltStates.EJECT);
                     intake.setIntakeState(Intake.IntakeState.OUTTAKE);
+                    trigger.setState(Trigger.ServoState.RESTING);
                     break;
+
             }
 
             drivetrain.update(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);

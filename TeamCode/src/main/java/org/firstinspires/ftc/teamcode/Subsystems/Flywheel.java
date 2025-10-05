@@ -44,7 +44,7 @@ public class Flywheel {
                 flywheelMotor.setPower(0);
                 break;
             case SPINNING:
-                flywheelMotor.setPower(0.5);
+                flywheelMotor.setPower(1);
                 break;
 
 
