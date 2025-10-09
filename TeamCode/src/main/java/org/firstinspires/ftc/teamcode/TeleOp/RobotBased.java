@@ -62,11 +62,13 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    if (RT) {
+                    if (RT || LT) {
                         kicker.setState(Kicker.ServoState.SHOOTING);
                     }
                     if (gamepad1.right_trigger > 0.1 && flywheel.IsReady){
                         trigger.setState(Trigger.ServoState.SHOOTING);
+                    } else {
+                        trigger.setState(Trigger.ServoState.RESTING);
                     }
                     break;
 
@@ -79,6 +81,9 @@ public class RobotBased extends LinearOpMode {
                     }
                     break;
                 case EJECTING:
+                    if (LT){
+                        currentState = State.INTAKING;
+                    }
                     if (X) {
                         currentState = State.RESTING;
                     }

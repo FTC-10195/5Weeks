@@ -19,7 +19,7 @@ public class Kicker {
         KickerServo = hardwareMap.servo.get("kicker");
 
     }
-    public static double servoShootingPos = 0.1;
+    public static double servoShootingPos = 0.2;
     public static double servoRestingPos = 0.5;
     public void setState(ServoState newState) {
         currentServoState = newState;
