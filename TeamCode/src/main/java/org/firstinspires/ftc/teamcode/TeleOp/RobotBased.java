@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Conveyor;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Flywheel;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Kicker;
 import org.firstinspires.ftc.teamcode.Subsystems.Trigger;
 
 @TeleOp
@@ -38,6 +39,8 @@ public class RobotBased extends LinearOpMode {
         intake.initiate(hardwareMap);
         Drivetrain drivetrain = new Drivetrain();
         drivetrain.initiate(hardwareMap);
+        Kicker kicker = new Kicker();
+        kicker.initiate(hardwareMap);
         Gamepad previousGamepad1 = new Gamepad();
         while (opModeIsActive()) {
             boolean LB = gamepad1.left_bumper && !previousGamepad1.left_bumper;
@@ -58,10 +61,12 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    if (gamepad1.right_trigger > 0.1 && flywheel.IsReady) {
+                    if (RT && flywheel.IsReady) {
                         trigger.setState(Trigger.ServoState.SHOOTING);
+                        kicker.setState(Kicker.ServoState.SHOOTING);
                     } else {
                         trigger.setState(Trigger.ServoState.RESTING);
+                        kicker.setState(Kicker.ServoState.RESTING);
                     }
                     break;
 
@@ -122,6 +127,7 @@ public class RobotBased extends LinearOpMode {
             flywheel.update();
             intake.update();
             trigger.update();
+            kicker.update();
             telemetry.addData("State", currentState);
             telemetry.update();
         }
