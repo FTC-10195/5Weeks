@@ -54,6 +54,7 @@ public class RobotBased extends LinearOpMode {
                 case RESTING:
                     if (RT) {
                         currentState = State.SPINNING;
+                        flywheel.setState(Flywheel.FlywheelStates.SPINNING);
                     } else if (LT) {
                         currentState = State.INTAKING;
                     }
@@ -61,12 +62,11 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    if (RT && flywheel.IsReady) {
-                        trigger.setState(Trigger.ServoState.SHOOTING);
+                    if (RT) {
                         kicker.setState(Kicker.ServoState.SHOOTING);
-                    } else {
-                        trigger.setState(Trigger.ServoState.RESTING);
-                        kicker.setState(Kicker.ServoState.RESTING);
+                    }
+                    if (gamepad1.right_trigger > 0.1 && flywheel.IsReady){
+                        trigger.setState(Trigger.ServoState.SHOOTING);
                     }
                     break;
 
@@ -99,7 +99,7 @@ public class RobotBased extends LinearOpMode {
 
 
                 case SPINNING:
-                    flywheel.setState(Flywheel.FlywheelStates.SPINNING); // adjust power
+                    // adjust power
                     conveyor.setBeltstate(Conveyor.BeltStates.ON);
                     intake.setIntakeState(Intake.IntakeState.OFF);
                     break;

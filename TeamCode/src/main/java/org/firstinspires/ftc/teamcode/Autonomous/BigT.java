@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Conveyor;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Flywheel;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.Kicker;
 import org.firstinspires.ftc.teamcode.Subsystems.Trigger;
 
 @Autonomous
@@ -27,6 +28,8 @@ public class BigT extends LinearOpMode {
         flywheel.initiate(hardwareMap);
         Trigger trigger = new Trigger();
         trigger.initiate(hardwareMap);
+        Kicker kicker = new Kicker();
+        kicker.initiate(hardwareMap);
         Intake intake = new Intake();
         intake.initiate(hardwareMap);
         Drivetrain drivetrain = new Drivetrain();
@@ -45,6 +48,7 @@ public class BigT extends LinearOpMode {
                 flywheel.setState(Flywheel.FlywheelStates.SPINNING);
                 if (flywheel.IsReady) {
                     trigger.setState(Trigger.ServoState.SHOOTING);
+                    kicker.setState(Kicker.ServoState.SHOOTING);
                 }
             }
             if (elapsed > 10000)  {

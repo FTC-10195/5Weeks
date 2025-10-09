@@ -10,7 +10,7 @@ public class Kicker {
         SHOOTING,
         RESTING,
     }
-    public long waitTime = 250;
+    public long waitTime = 500;
     long timeSnapshot = System.currentTimeMillis();
 
     public ServoState currentServoState = ServoState.RESTING;
@@ -19,11 +19,13 @@ public class Kicker {
         KickerServo = hardwareMap.servo.get("kicker");
 
     }
-    public static double servoShootingPos = 0.4;
-    public static double servoRestingPos = 0;
+    public static double servoShootingPos = 0.1;
+    public static double servoRestingPos = 0.5;
     public void setState(ServoState newState) {
         currentServoState = newState;
-        timeSnapshot = System.currentTimeMillis();
+        if (currentServoState == ServoState.SHOOTING){
+            timeSnapshot = System.currentTimeMillis();
+        }
     }
     public ServoState getCurrentServoState() {
         return currentServoState;

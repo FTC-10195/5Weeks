@@ -8,8 +8,7 @@ public class Trigger {
         SHOOTING,
         RESTING
     }
-    public long waitTime = 250;
-    long timeSnapshot = System.currentTimeMillis();
+
     public ServoState currentServoState = ServoState.RESTING;
     Servo TriggerServo;
     public void initiate(HardwareMap hardwareMap) {
@@ -20,7 +19,6 @@ public class Trigger {
 
     public void setState(ServoState newState){
         currentServoState = newState;
-        timeSnapshot = System.currentTimeMillis();
     }
     public ServoState getCurrentServoState(){
         return currentServoState;
@@ -30,9 +28,6 @@ public class Trigger {
         switch (currentServoState){
             case SHOOTING:
                 TriggerServo.setPosition(servoShootingPos);
-                if (System.currentTimeMillis() - timeSnapshot > waitTime){
-                currentServoState = Trigger.ServoState.RESTING;
-                }
                 break;
             case RESTING:
                 TriggerServo.setPosition(servoRestingPos);
