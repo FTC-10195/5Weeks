@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -28,11 +29,12 @@ public class Flywheel {
 
 
     public FlywheelStates currentFlywheelState = FlywheelStates.SPINNING;
-    DcMotor flywheelMotor;
+    DcMotorEx flywheelMotor;
     public int prevPosition = 0;
     public long prevTime = System.currentTimeMillis();
+    double targetVelocity = 1600;
     public void initiate(HardwareMap hardwareMap) {
-        flywheelMotor = hardwareMap.dcMotor.get("flywheel");
+        flywheelMotor = hardwareMap.get(DcMotorEx.class, "flywheel");
     }
 
 
@@ -57,7 +59,7 @@ public class Flywheel {
 
                 break;
             case SPINNING:
-                flywheelMotor.setPower(1);
+                flywheelMotor.setVelocity(targetVelocity);
                 if (System.currentTimeMillis() - timeShot > waitTime){
                     IsReady = true;
                 }
