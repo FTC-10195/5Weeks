@@ -37,10 +37,10 @@ public class Flywheel {
 
 
     public void setState(FlywheelStates newState) {
-        currentFlywheelState = newState;
-        if (currentFlywheelState == FlywheelStates.SPINNING) {
+        if (newState == FlywheelStates.SPINNING && currentFlywheelState != FlywheelStates.SPINNING) {
             timeShot = System.currentTimeMillis();
         }
+        currentFlywheelState = newState;
     }
 
     long velocity = 0;
