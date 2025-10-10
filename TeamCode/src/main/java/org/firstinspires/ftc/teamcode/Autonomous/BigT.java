@@ -39,26 +39,28 @@ public class BigT extends LinearOpMode {
         while (opModeIsActive()) {
             long elapsed = System.currentTimeMillis() - startTime;
             if (elapsed < 1000) {
-                drivetrain.update(0, -0.3, 0);
+                drivetrain.update(0, 0.5, 0);
             } else {
                 drivetrain.update(0, 0, 0);
-            }
-            if(elapsed > 3000) {
                 conveyor.setBeltstate(ON);
                 flywheel.setState(Flywheel.FlywheelStates.SPINNING);
-                if (flywheel.IsReady) {
+            }
+                if (flywheel.IsReady && elapsed < 3000) {
                     trigger.setState(Trigger.ServoState.SHOOTING);
                     kicker.setState(Kicker.ServoState.SHOOTING);
                 }
-            }
+                if (kicker.getCurrentServoState() == Kicker.ServoState.RESTING){
+                    kicker.setState(Kicker.ServoState.SHOOTING);
+                }
             if (elapsed > 10000)  {
-                drivetrain.update(-0.3, 0, 0);
+                drivetrain.update(-0.5, 0, 0);
             }
             conveyor.update();
             flywheel.update();
             intake.update();
             trigger.update();
             telemetry.update();
+            kicker.update();
         }
     }
 }

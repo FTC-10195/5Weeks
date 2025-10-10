@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.EJECT;
 import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.OFF;
 import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
 
@@ -70,6 +71,11 @@ public class RobotBased extends LinearOpMode {
                     } else {
                         trigger.setState(Trigger.ServoState.RESTING);
                     }
+                    if (kicker.getCurrentServoState() == Kicker.ServoState.SHOOTING){
+                        conveyor.setBeltstate(ON);
+                    } else {
+                        conveyor.setBeltstate(OFF);
+                    }
                     break;
 
 
@@ -120,11 +126,26 @@ public class RobotBased extends LinearOpMode {
 
                 case EJECTING:
                     flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                    conveyor.setBeltstate(Conveyor.BeltStates.EJECT);
+                    conveyor.setBeltstate(ON);
                     intake.setIntakeState(Intake.IntakeState.OUTTAKE);
                     trigger.setState(Trigger.ServoState.RESTING);
                     break;
 
+            }
+
+            if (gamepad1.square){
+                conveyor.setBeltstate(EJECT);
+                intake.setIntakeState(Intake.IntakeState.OUTTAKE);
+            }
+            if (gamepad1.circle){
+                kicker.setState(Kicker.ServoState.SHOOTING);
+            }
+            if (gamepad1.triangle){
+                trigger.setState(Trigger.ServoState.SHOOTING);
+                conveyor.setBeltstate(ON);
+                if (flywheel.getFlywheelState() == Flywheel.FlywheelStates.RESTING){
+                    flywheel.setState(Flywheel.FlywheelStates.SPINNING);
+                }
             }
 
             drivetrain.update(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
