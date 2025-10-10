@@ -38,23 +38,26 @@ public class SmallT extends LinearOpMode {
 
         while (opModeIsActive()) {
             long elapsed = System.currentTimeMillis() - startTime;
+
             if (elapsed < 2000) {
                 drivetrain.update(0, -0.7, 0);
                 conveyor.setBeltstate(OFF);
                 flywheel.setState(Flywheel.FlywheelStates.RESTING);
                 trigger.setState(Trigger.ServoState.RESTING);
                 kicker.setState(Kicker.ServoState.RESTING);
-            }
-            if (elapsed > 2000 && elapsed < 2500) {
-                drivetrain.update(0, 0, 0.3);
+            }else if (elapsed > 2000 && elapsed < 2500) {
+                drivetrain.update(0, 0, -0.3);
                 flywheel.setState(Flywheel.FlywheelStates.SPINNING);
-            }
-            if (flywheel.IsReady && elapsed < 5000) {
+            } else if (flywheel.IsReady && elapsed < 5000) {
                 trigger.setState(Trigger.ServoState.SHOOTING);
                 kicker.setState(Kicker.ServoState.SHOOTING);
             }
+
             if (kicker.getCurrentServoState() == Kicker.ServoState.RESTING && elapsed > 5000){
                 kicker.setState(Kicker.ServoState.SHOOTING);
+            }
+            if (elapsed > 2500){
+                drivetrain.update(0, 0, 0);
             }
             if (elapsed > 10000)  {
                 drivetrain.update(-0.5, 0, 0);
