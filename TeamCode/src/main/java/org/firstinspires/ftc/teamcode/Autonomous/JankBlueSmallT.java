@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Kicker;
 import org.firstinspires.ftc.teamcode.Subsystems.Trigger;
 
 @Autonomous
-public class JankSmallT extends LinearOpMode {
+public class JankBlueSmallT extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
