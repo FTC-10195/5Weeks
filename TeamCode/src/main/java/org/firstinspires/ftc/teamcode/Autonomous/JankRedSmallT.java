@@ -38,7 +38,7 @@ public class JankRedSmallT extends LinearOpMode {
             long elapsed = System.currentTimeMillis() - startTime;
 
             if (elapsed < 2000) {
-                drivetrain.update(0.1, 0.7, 0);
+                drivetrain.update(0.1, -0.7, 0);
                 conveyor.setBeltstate(OFF);
                 flywheel.setState(Flywheel.FlywheelStates.RESTING);
                 trigger.setState(Trigger.ServoState.RESTING);
@@ -48,7 +48,7 @@ public class JankRedSmallT extends LinearOpMode {
                 flywheel.setState(Flywheel.FlywheelStates.SPINNING);
                 conveyor.setBeltstate(ON);
             } else if (elapsed > 2500 && elapsed < 3000){
-                drivetrain.update(0, 0.4, 0);
+                drivetrain.update(0, -0.4, 0);
             }
             else if (flywheel.IsReady && elapsed < 5000) {
                 trigger.setState(Trigger.ServoState.SHOOTING);
