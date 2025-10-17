@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.rowanmcalpin.nextftc.core.Subsystem;
 import com.rowanmcalpin.nextftc.core.command.Command;
@@ -16,13 +17,13 @@ public class Conveyor extends Subsystem {
     }
 
     private States currentState = States.RESTING;
-    private MotorEx motor;
+    private DcMotorEx motor;
     public States getState() {
         return currentState;
     }
 
     public void initiate(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(MotorEx.class, "conveyor");
+        motor = hardwareMap.get(DcMotorEx.class, "conveyor");
     }
     public Command setState(States newState) {
         currentState = newState;

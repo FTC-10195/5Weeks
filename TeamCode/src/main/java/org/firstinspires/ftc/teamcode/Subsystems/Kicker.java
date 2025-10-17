@@ -40,7 +40,8 @@ public class Kicker extends Subsystem {
                 setState(States.KICKING),
                 new Delay(0.5),
                 setState(States.RESETTING),
-                new Delay(0.5)
+                new Delay(0.5),
+                setState(States.RESTING)
         );
     }
     public void update(){

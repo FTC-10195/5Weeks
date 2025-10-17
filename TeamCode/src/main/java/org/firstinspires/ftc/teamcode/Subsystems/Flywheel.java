@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.rowanmcalpin.nextftc.core.Subsystem;
 import com.rowanmcalpin.nextftc.core.command.Command;
@@ -15,11 +17,11 @@ public class Flywheel extends Subsystem {
         RESTING,
         SPINNING
     }
-    public MotorEx motor;
+    public DcMotorEx motor;
     States currentState = States.RESTING;
     public void initiate(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(MotorEx.class,"flywheel");
-        motor.resetEncoder();
+        motor = hardwareMap.get(DcMotorEx.class,"flywheel");
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
 
@@ -75,6 +77,7 @@ public class Flywheel extends Subsystem {
        );
     }
     public void update(){
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         double power = 0;
         error = 0;
         switch (currentState){

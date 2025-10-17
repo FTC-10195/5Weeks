@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Flywheel;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Kicker;
 import org.firstinspires.ftc.teamcode.Subsystems.Trigger;
+import com.rowanmcalpin.nextftc.core.command.CommandManager;
+
 
 @TeleOp
 public class SubsystemBased extends NextFTCOpMode {
@@ -98,15 +100,16 @@ public class SubsystemBased extends NextFTCOpMode {
             kicker.update();
             drivetrain.update(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
+            CommandManager.INSTANCE.run();
 
             telemetry.addData("trig",trigger.getState());
             telemetry.addData("fly",flywheel.getState());
             telemetry.addData("conv",conveyor.getState());
             telemetry.addData("intake",intake.getState());
             telemetry.addData("kick",kicker.getState());
+            telemetry.addData("Active Commands", CommandManager.INSTANCE.getRunningCommands().size());
 
             telemetry.update();
-
 
         }
     }

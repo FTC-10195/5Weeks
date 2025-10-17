@@ -7,6 +7,8 @@ import com.rowanmcalpin.nextftc.core.command.Command;
 import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup;
 import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay;
 
+import java.time.Duration;
+
 public class Trigger extends Subsystem {
     public enum States{
         CLOSED,
@@ -39,7 +41,8 @@ public class Trigger extends Subsystem {
                 setState(States.OPEN),
                 new Delay(0.5),
                 setState(States.RESETTING),
-                new Delay(0.5)
+                new Delay(0.5),
+                setState(States.CLOSED)
         );
     }
     public void update(){

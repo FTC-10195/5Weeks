@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.rowanmcalpin.nextftc.core.Subsystem;
 import com.rowanmcalpin.nextftc.core.command.Command;
@@ -14,9 +16,9 @@ public class Intake extends Subsystem {
         EJECTING
     }
     States currentState = States.RESTING;
-    public MotorEx motor;
+    public DcMotorEx motor;
     public void initiate(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(MotorEx.class,"intake");
+        motor = hardwareMap.get(DcMotorEx.class,"intake");
     }
 
    public Command setState(States newState){
