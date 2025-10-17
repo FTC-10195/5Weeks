@@ -1,50 +1,41 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.rowanmcalpin.nextftc.core.Subsystem;
-import com.rowanmcalpin.nextftc.core.command.Command;
-import com.rowanmcalpin.nextftc.ftc.hardware.controllables.MotorEx;
-import com.rowanmcalpin.nextftc.ftc.hardware.controllables.SetPower;
 
 
-public class Conveyor extends Subsystem {
-
-    public enum States {
-        RESTING,
-        INTAKING,
-        EJECTING
+public class Conveyor {
+    public enum BeltStates {
+        ON,
+        OFF,
+        EJECT
     }
+    public BeltStates currentBeltState = BeltStates.OFF;
+    public void setBeltstate(BeltStates newBeltState){
+        currentBeltState = newBeltState;
+    }
+    DcMotor beltMotor;
+    public void initiate(HardwareMap hardwaremap){
+        beltMotor = hardwaremap.dcMotor.get("belt");
+        beltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-    private States currentState = States.RESTING;
-    private DcMotorEx motor;
-    public States getState() {
-        return currentState;
-    }
 
-    public void initiate(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(DcMotorEx.class, "conveyor");
+
     }
-    public Command setState(States newState) {
-        currentState = newState;
-        return new Command() {
-            @Override
-            public boolean isDone() {
-                return true;
-            }
-        };
-    }
-    public void update() {
-        switch (currentState) {
-            case RESTING:
-                motor.setPower(0);
+    public void update(){
+        switch(currentBeltState){
+            case ON:
+                beltMotor.setPower(1);
                 break;
-            case EJECTING:
-                motor.setPower(-1);
+            case OFF:
+                beltMotor.setPower(0.0);
                 break;
-            case INTAKING:
-                motor.setPower(1);
-                break;
+            case EJECT:
+                beltMotor.setPower(-1);
         }
     }
 }
+
+
+

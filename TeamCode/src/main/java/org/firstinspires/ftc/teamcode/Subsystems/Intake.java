@@ -1,48 +1,48 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+
+
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.rowanmcalpin.nextftc.core.Subsystem;
-import com.rowanmcalpin.nextftc.core.command.Command;
-import com.rowanmcalpin.nextftc.ftc.hardware.controllables.MotorEx;
-import com.rowanmcalpin.nextftc.ftc.hardware.controllables.SetPower;
-
-
-public class Intake extends Subsystem {
-    public enum States{
-        RESTING,
-        INTAKING,
-        EJECTING
-    }
-    States currentState = States.RESTING;
-    public DcMotorEx motor;
-    public void initiate(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(DcMotorEx.class,"intake");
+public class Intake {
+    public enum IntakeState {
+        ON,
+        OFF,
+        OUTTAKE,
     }
 
-   public Command setState(States newState){
-        currentState = newState;
-        return new Command() {
-            @Override
-            public boolean isDone() {
-                return true;
-            }
-        };
-   }
-   public States getState(){
-        return currentState;
-   }
-   public void update(){
-        switch (currentState){
-            case RESTING:
-                motor.setPower(0);
+
+    public IntakeState currentIntakeState = IntakeState.OFF;
+
+
+    public void setIntakeState(IntakeState newIntakeState){
+        currentIntakeState = newIntakeState;
+    }
+
+
+    DcMotor IntakeMotor;
+    public IntakeState getCurrentIntakeState() {
+        return currentIntakeState;
+    }
+
+
+    public void initiate(HardwareMap hardwaremap){
+        IntakeMotor = hardwaremap.dcMotor.get("intake");
+        IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+    public void update(){
+        switch(currentIntakeState){
+            case ON:
+                IntakeMotor.setPower(0.9);
                 break;
-            case INTAKING:
-                motor.setPower(1);
+            case OFF:
+                IntakeMotor.setPower(0.0);
                 break;
-            case EJECTING:
-                motor.setPower(-1);
+            case OUTTAKE:
+                IntakeMotor.setPower(-0.9);
+                break;
         }
-   }
+    }
 }
+
+

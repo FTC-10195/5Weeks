@@ -1,59 +1,46 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.rowanmcalpin.nextftc.core.Subsystem;
-import com.rowanmcalpin.nextftc.core.command.Command;
-import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup;
-import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay;
-import com.rowanmcalpin.nextftc.ftc.hardware.ServoToPosition;
 
-public class Kicker extends Subsystem {
-    public enum States{
+
+public class Kicker {
+    public enum ServoState {
+        SHOOTING,
         RESTING,
-        KICKING,
-        RESETTING
     }
-    public Servo servo;
-    public static double restPos = 0.5;
-    public static double kickPos = .37;
-    public static double waitTime = 0.5;
-    States currentState = States.RESTING;
-    public void initiate(HardwareMap hardwareMap) {
-        servo = hardwareMap.servo.get("kicker");
-    }
+    public long waitTime = 500;
+    long timeSnapshot = System.currentTimeMillis();
 
-    public Command setState(States newState) {
-        currentState = newState;
-        return new Command() {
-            @Override
-            public boolean isDone() {
-                return true;
-            }
-        };
+    public ServoState currentServoState = ServoState.RESTING;
+    Servo KickerServo;
+    public void initiate(HardwareMap hardwareMap) {
+        KickerServo = hardwareMap.servo.get("kicker");
+
     }
-    public States getState(){
-        return currentState;
+    public static double servoShootingPos = 0.37;
+    public static double servoRestingPos = 0.5;
+    public void setState(ServoState newState) {
+        currentServoState = newState;
+        if (currentServoState == ServoState.SHOOTING){
+            timeSnapshot = System.currentTimeMillis();
+        }
     }
-    public Command shoot() {
-        return new SequentialGroup(
-                setState(States.KICKING),
-                new Delay(0.5),
-                setState(States.RESETTING),
-                new Delay(0.5),
-                setState(States.RESTING)
-        );
+    public ServoState getCurrentServoState() {
+        return currentServoState;
     }
-    public void update(){
-        switch (currentState){
-            case RESTING:
-            case RESETTING:
-                servo.setPosition(restPos);
+    public void update() {
+        switch (currentServoState) {
+            case SHOOTING:
+                KickerServo.setPosition(servoShootingPos);
+                if (System.currentTimeMillis() - timeSnapshot > waitTime){
+                    currentServoState = ServoState.RESTING;
+                }
                 break;
-            case KICKING:
-                servo.setPosition(kickPos);
+            case RESTING:
+                KickerServo.setPosition(servoRestingPos);
                 break;
         }
     }
-
 }
