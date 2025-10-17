@@ -1,0 +1,47 @@
+package org.firstinspires.ftc.teamcode.Subsystems;
+
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+public class Drivetrain {
+    DcMotor frontLeftMotor;
+    DcMotor frontRightMotor;
+    DcMotor backLeftMotor;
+    DcMotor backRightMotor;
+
+
+    public void initiate(HardwareMap hardwareMap) {
+        frontLeftMotor = hardwareMap.dcMotor.get("motor0");
+        frontRightMotor = hardwareMap.dcMotor.get("motor1");
+        backLeftMotor = hardwareMap.dcMotor.get("motor2");
+        backRightMotor = hardwareMap.dcMotor.get("motor3");
+
+
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+    public void update(double x, double y, double rx){
+        x = -x;
+        rx = -rx;
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
+
+
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
+    }
+
+
+}
