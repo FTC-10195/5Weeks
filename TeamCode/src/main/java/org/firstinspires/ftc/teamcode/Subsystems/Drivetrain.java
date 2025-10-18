@@ -1,21 +1,27 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+@Config
 public class Drivetrain {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
     DcMotor backLeftMotor;
     DcMotor backRightMotor;
+    public static double flP = 1;
+    public static double frP = 1;
+    public static double blP = 1;
+    public static double brP = 1;
 
 
     public void initiate(HardwareMap hardwareMap) {
-        frontLeftMotor = hardwareMap.dcMotor.get("motor0");
-        frontRightMotor = hardwareMap.dcMotor.get("motor1");
-        backLeftMotor = hardwareMap.dcMotor.get("motor2");
-        backRightMotor = hardwareMap.dcMotor.get("motor3");
+        frontLeftMotor = hardwareMap.dcMotor.get("fl");
+        frontRightMotor = hardwareMap.dcMotor.get("fr");
+        backLeftMotor = hardwareMap.dcMotor.get("bl");
+        backRightMotor = hardwareMap.dcMotor.get("br");
 
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -37,10 +43,10 @@ public class Drivetrain {
         double backRightPower = (y + x - rx) / denominator;
 
 
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
+        frontLeftMotor.setPower(frontLeftPower * flP);
+        backLeftMotor.setPower(backLeftPower * blP);
+        frontRightMotor.setPower(frontRightPower * frP);
+        backRightMotor.setPower(backRightPower * brP);
     }
 
 

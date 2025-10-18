@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.OFF;
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.OFF;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.ON;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Conveyor;
@@ -47,49 +45,49 @@ public class SubsystemBased extends LinearOpMode {
             boolean RT = gamepad1.right_trigger > 0.1 && previousGamepad1.right_trigger <= 0.1;
             previousGamepad1.copy(gamepad1);
             if (LB){
-                switch (conveyor.currentBeltState){
+                switch (conveyor.currentState){
                     case ON:
-                        conveyor.setBeltstate(OFF);
+                        conveyor.setState(OFF);
                         break;
                     case OFF:
-                        conveyor.setBeltstate(ON);
+                        conveyor.setState(ON);
                         break;
                 }
             }
             if (RB){
-                switch (intake.getCurrentIntakeState()){
+                switch (intake.getState()){
                     case ON:
-                        intake.setIntakeState(Intake.IntakeState.OFF);
+                        intake.setState(Intake.States.OFF);
                         break;
                     case OFF:
-                        intake.setIntakeState(Intake.IntakeState.ON);
+                        intake.setState(Intake.States.ON);
                         break;
                 }
             }
             if (X){
-                switch (intake.getCurrentIntakeState()){
+                switch (intake.getState()){
                     case ON:
                     case OFF:
-                        intake.setIntakeState(Intake.IntakeState.OUTTAKE);
+                        intake.setState(Intake.States.OUTTAKE);
                         break;
                     case OUTTAKE:
-                        intake.setIntakeState(Intake.IntakeState.OFF);
+                        intake.setState(Intake.States.OFF);
                         break;
                 }
             }
             if (LT) {
-                switch (flywheel.getFlywheelState()) {
+                switch (flywheel.getState()) {
                     case RESTING:
-                        flywheel.setState(Flywheel.FlywheelStates.SPINNING);
+                        flywheel.setState(Flywheel.States.SPINNING);
                         break;
                     case SPINNING:
-                        flywheel.setState(Flywheel.FlywheelStates.RESTING);
+                        flywheel.setState(Flywheel.States.RESTING);
                         break;
                 }
             }
 
             if (RT) {
-                trigger.setState(Trigger.ServoState.SHOOTING);
+                trigger.setState(Trigger.States.SHOOTING);
             }
             drivetrain.update(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             trigger.update();

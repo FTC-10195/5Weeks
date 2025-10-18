@@ -1,65 +1,53 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
-
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-
+@Config
 public class Flywheel {
-    public enum FlywheelStates {
+    public enum States {
         SPINNING,
         RESTING,
     }
     public boolean IsReady = false;
     public long timeShot = System.currentTimeMillis();
-    public long waitTime = 1500;
+    public static long waitTime = 1500;
+    public static double targetVelocity = 1600;
 
-    public FlywheelStates getFlywheelState() {
-        return currentFlywheelState;
+    public States getState() {
+        return currenState;
 
     }
 
 
-    public FlywheelStates currentFlywheelState = FlywheelStates.SPINNING;
-    DcMotorEx flywheelMotor;
-    public int prevPosition = 0;
-    public long prevTime = System.currentTimeMillis();
-    double targetVelocity = 1600;
+    public States currenState = States.SPINNING;
+    DcMotorEx flywheel;
     public void initiate(HardwareMap hardwareMap) {
-        flywheelMotor = hardwareMap.get(DcMotorEx.class, "flywheel");
+        flywheel = hardwareMap.get(DcMotorEx.class, "flywheel");
     }
 
 
-    public void setState(FlywheelStates newState) {
-        if (newState == FlywheelStates.SPINNING && currentFlywheelState != FlywheelStates.SPINNING) {
+    public void setState(States newState) {
+        if (newState == States.SPINNING && currenState != States.SPINNING) {
             timeShot = System.currentTimeMillis();
         }
-        currentFlywheelState = newState;
+        currenState = newState;
     }
 
     long velocity = 0;
     public void update() {
-        int currentPosition = flywheelMotor.getCurrentPosition();
-        long currentTime = System.currentTimeMillis();
-        velocity = (currentPosition - prevPosition)/(currentTime - prevTime);
-        prevPosition = currentPosition;
-        prevTime = currentTime;
-        switch (currentFlywheelState) {
+        switch (currenState) {
             case RESTING:
-                flywheelMotor.setPower(0);
+                flywheel.setPower(0);
                 IsReady = false;
 
                 break;
             case SPINNING:
-                flywheelMotor.setVelocity(targetVelocity);
+                flywheel.setVelocity(targetVelocity);
                 if (System.currentTimeMillis() - timeShot > waitTime){
                     IsReady = true;
                 }

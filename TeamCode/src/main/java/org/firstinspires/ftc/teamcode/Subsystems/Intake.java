@@ -2,27 +2,31 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+@Config
 public class Intake {
-    public enum IntakeState {
+    public enum States {
         ON,
         OFF,
         OUTTAKE,
     }
 
 
-    public IntakeState currentIntakeState = IntakeState.OFF;
+    public States currentState = States.OFF;
+    public static double intakePower = .9;
+    public static double ejectPower = -.9;
 
 
-    public void setIntakeState(IntakeState newIntakeState){
-        currentIntakeState = newIntakeState;
+    public void setState(States newStates){
+        currentState = newStates;
     }
 
 
     DcMotor IntakeMotor;
-    public IntakeState getCurrentIntakeState() {
-        return currentIntakeState;
+    public States getState() {
+        return currentState;
     }
 
 
@@ -31,15 +35,15 @@ public class Intake {
         IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void update(){
-        switch(currentIntakeState){
+        switch(currentState){
             case ON:
-                IntakeMotor.setPower(0.9);
+                IntakeMotor.setPower(intakePower);
                 break;
             case OFF:
-                IntakeMotor.setPower(0.0);
+                IntakeMotor.setPower(0);
                 break;
             case OUTTAKE:
-                IntakeMotor.setPower(-0.9);
+                IntakeMotor.setPower(ejectPower);
                 break;
         }
     }

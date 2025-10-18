@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.ON;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -39,11 +39,11 @@ public class JankBigT extends LinearOpMode {
                 drivetrain.update(0, 0.5, 0);
             } else {
                 drivetrain.update(0, 0, 0);
-                conveyor.setBeltstate(ON);
-                flywheel.setState(Flywheel.FlywheelStates.SPINNING);
+                conveyor.setState(ON);
+                flywheel.setState(Flywheel.States.SPINNING);
             }
                 if (flywheel.IsReady && elapsed < 3000) {
-                    trigger.setState(Trigger.ServoState.SHOOTING);
+                    trigger.setState(Trigger.States.SHOOTING);
                     kicker.setState(Kicker.ServoState.SHOOTING);
                 }
                 if (kicker.getCurrentServoState() == Kicker.ServoState.RESTING){

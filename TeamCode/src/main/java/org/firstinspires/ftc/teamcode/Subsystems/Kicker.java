@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
+@Config
 public class Kicker {
     public enum ServoState {
         SHOOTING,
+        RETURNING,
         RESTING,
     }
-    public long waitTime = 500;
+    public static long waitTime = 500;
     long timeSnapshot = System.currentTimeMillis();
 
     public ServoState currentServoState = ServoState.RESTING;
@@ -35,7 +37,14 @@ public class Kicker {
             case SHOOTING:
                 KickerServo.setPosition(servoShootingPos);
                 if (System.currentTimeMillis() - timeSnapshot > waitTime){
-                    currentServoState = ServoState.RESTING;
+                    currentServoState = ServoState.RETURNING;
+                    timeSnapshot = System.currentTimeMillis();
+                }
+                break;
+            case RETURNING:
+                KickerServo.setPosition(servoRestingPos);
+                if (System.currentTimeMillis() - timeSnapshot > waitTime){
+                    currentServoState = ServoState.RETURNING;
                 }
                 break;
             case RESTING:

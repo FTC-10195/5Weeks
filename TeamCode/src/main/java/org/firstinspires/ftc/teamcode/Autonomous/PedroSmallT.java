@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.OFF;
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
-
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
-import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -86,14 +82,14 @@ public class PedroSmallT extends LinearOpMode {
                     break;
                 case 1:
                     if (timePassed > 1000){
-                        flywheel.setState(Flywheel.FlywheelStates.SPINNING);
+                        flywheel.setState(Flywheel.States.SPINNING);
                         setPathState(pathState+1);
                     }
                     break;
                 case 2:
                     if (flywheel.IsReady && timePassed > 2000){
                         kicker.setState(Kicker.ServoState.SHOOTING);
-                        trigger.setState(Trigger.ServoState.SHOOTING);
+                        trigger.setState(Trigger.States.SHOOTING);
                         setPathState(pathState+1);
                     }
                     break;
@@ -105,8 +101,8 @@ public class PedroSmallT extends LinearOpMode {
                 case 4:
                     if (timePassed > 700){
                         kicker.setState(Kicker.ServoState.SHOOTING);
-                        flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                        trigger.setState(Trigger.ServoState.RESTING);
+                        flywheel.setState(Flywheel.States.RESTING);
+                        trigger.setState(Trigger.States.RESTING);
                         kicker.setState(Kicker.ServoState.RESTING);
                         follower.followPath(park1);
                         setPathState(pathState+1);

@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.OFF;
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.OFF;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.ON;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -39,19 +39,19 @@ public class JankRedSmallT extends LinearOpMode {
 
             if (elapsed < 2000) {
                 drivetrain.update(0.1, -0.7, 0);
-                conveyor.setBeltstate(OFF);
-                flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                trigger.setState(Trigger.ServoState.RESTING);
+                conveyor.setState(OFF);
+                flywheel.setState(Flywheel.States.RESTING);
+                trigger.setState(Trigger.States.RESTING);
                 kicker.setState(Kicker.ServoState.RESTING);
             }else if (elapsed > 2000 && elapsed < 2500) {
                 drivetrain.update(0, 0, 0.4);
-                flywheel.setState(Flywheel.FlywheelStates.SPINNING);
-                conveyor.setBeltstate(ON);
+                flywheel.setState(Flywheel.States.SPINNING);
+                conveyor.setState(ON);
             } else if (elapsed > 2500 && elapsed < 3000){
                 drivetrain.update(0, -0.4, 0);
             }
             else if (flywheel.IsReady && elapsed < 5000) {
-                trigger.setState(Trigger.ServoState.SHOOTING);
+                trigger.setState(Trigger.States.SHOOTING);
                 kicker.setState(Kicker.ServoState.SHOOTING);
             }
 

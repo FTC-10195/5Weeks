@@ -1,38 +1,41 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-
+@Config
 public class Conveyor {
-    public enum BeltStates {
+    public enum States {
         ON,
         OFF,
         EJECT
     }
-    public BeltStates currentBeltState = BeltStates.OFF;
-    public void setBeltstate(BeltStates newBeltState){
-        currentBeltState = newBeltState;
+    public static double onPower = 1;
+    public static double offPower = -1;
+    public States currentState = States.OFF;
+    public void setState(States newState){
+        currentState = newState;
     }
-    DcMotor beltMotor;
+    DcMotor conveyor;
     public void initiate(HardwareMap hardwaremap){
-        beltMotor = hardwaremap.dcMotor.get("belt");
-        beltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        conveyor = hardwaremap.dcMotor.get("conveyor");
+        conveyor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 
     }
     public void update(){
-        switch(currentBeltState){
+        switch(currentState){
             case ON:
-                beltMotor.setPower(1);
+                conveyor.setPower(onPower);
                 break;
             case OFF:
-                beltMotor.setPower(0.0);
+                conveyor.setPower(0.0);
                 break;
             case EJECT:
-                beltMotor.setPower(-1);
+                conveyor.setPower(offPower);
         }
     }
 }

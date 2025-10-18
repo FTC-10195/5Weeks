@@ -1,15 +1,16 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
+@Config
 public class Trigger {
-    public enum ServoState {
+    public enum States {
         SHOOTING,
         RESTING
     }
 
-    public ServoState currentServoState = ServoState.RESTING;
+    public States currentState = States.RESTING;
     Servo TriggerServo;
     public void initiate(HardwareMap hardwareMap) {
         TriggerServo = hardwareMap.servo.get("trigger");
@@ -17,15 +18,15 @@ public class Trigger {
     public static double servoShootingPos = 0.2;
     public static double servoRestingPos = 0.5;
 
-    public void setState(ServoState newState){
-        currentServoState = newState;
+    public void setState(States newState){
+        currentState = newState;
     }
-    public ServoState getCurrentServoState(){
-        return currentServoState;
+    public States getState(){
+        return currentState;
     }
     public void update(){
 
-        switch (currentServoState){
+        switch (currentState){
             case SHOOTING:
                 TriggerServo.setPosition(servoShootingPos);
                 break;

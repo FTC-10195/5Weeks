@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.EJECT;
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.OFF;
-import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.BeltStates.ON;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.EJECT;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.OFF;
+import static org.firstinspires.ftc.teamcode.Subsystems.Conveyor.States.ON;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -55,7 +55,7 @@ public class RobotBased extends LinearOpMode {
                 case RESTING:
                     if (RT) {
                         currentState = State.SPINNING;
-                        flywheel.setState(Flywheel.FlywheelStates.SPINNING);
+                        flywheel.setState(Flywheel.States.SPINNING);
                     } else if (LT) {
                         currentState = State.INTAKING;
                     }
@@ -67,14 +67,14 @@ public class RobotBased extends LinearOpMode {
                         kicker.setState(Kicker.ServoState.SHOOTING);
                     }
                     if (gamepad1.right_trigger > 0.1 && flywheel.IsReady){
-                        trigger.setState(Trigger.ServoState.SHOOTING);
+                        trigger.setState(Trigger.States.SHOOTING);
                     } else {
-                        trigger.setState(Trigger.ServoState.RESTING);
+                        trigger.setState(Trigger.States.RESTING);
                     }
                     if (kicker.getCurrentServoState() == Kicker.ServoState.SHOOTING){
-                        conveyor.setBeltstate(ON);
+                        conveyor.setState(ON);
                     } else {
-                        conveyor.setBeltstate(OFF);
+                        conveyor.setState(OFF);
                     }
                     break;
 
@@ -102,49 +102,44 @@ public class RobotBased extends LinearOpMode {
 
             switch (currentState) {
                 case RESTING:
-                    flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                    intake.setIntakeState(Intake.IntakeState.OFF);
-                    conveyor.setBeltstate(Conveyor.BeltStates.OFF);
-                    trigger.setState(Trigger.ServoState.RESTING);
+                    flywheel.setState(Flywheel.States.RESTING);
+                    intake.setState(Intake.States.OFF);
+                    conveyor.setState(Conveyor.States.OFF);
+                    trigger.setState(Trigger.States.RESTING);
                     break;
-
-
                 case SPINNING:
-                    // adjust power
-                    conveyor.setBeltstate(Conveyor.BeltStates.ON);
-                    intake.setIntakeState(Intake.IntakeState.OFF);
+                    conveyor.setState(Conveyor.States.ON);
+                    intake.setState(Intake.States.OFF);
                     break;
-
-
                 case INTAKING:
-                    flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                    conveyor.setBeltstate(Conveyor.BeltStates.ON);
-                    intake.setIntakeState(Intake.IntakeState.ON);
-                    trigger.setState(Trigger.ServoState.RESTING);
+                    flywheel.setState(Flywheel.States.RESTING);
+                    conveyor.setState(Conveyor.States.ON);
+                    intake.setState(Intake.States.ON);
+                    trigger.setState(Trigger.States.RESTING);
                     break;
-
-
                 case EJECTING:
-                    flywheel.setState(Flywheel.FlywheelStates.RESTING);
-                    conveyor.setBeltstate(ON);
-                    intake.setIntakeState(Intake.IntakeState.OUTTAKE);
-                    trigger.setState(Trigger.ServoState.RESTING);
+                    flywheel.setState(Flywheel.States.RESTING);
+                    conveyor.setState(ON);
+                    intake.setState(Intake.States.OUTTAKE);
+                    trigger.setState(Trigger.States.RESTING);
                     break;
 
             }
 
+
+            //Overrides
             if (gamepad1.square){
-                conveyor.setBeltstate(EJECT);
-                intake.setIntakeState(Intake.IntakeState.OUTTAKE);
+                conveyor.setState(EJECT);
+                intake.setState(Intake.States.OUTTAKE);
             }
             if (gamepad1.circle){
                 kicker.setState(Kicker.ServoState.SHOOTING);
             }
             if (gamepad1.triangle){
-                trigger.setState(Trigger.ServoState.SHOOTING);
-                conveyor.setBeltstate(ON);
-                if (flywheel.getFlywheelState() == Flywheel.FlywheelStates.RESTING){
-                    flywheel.setState(Flywheel.FlywheelStates.SPINNING);
+                trigger.setState(Trigger.States.SHOOTING);
+                conveyor.setState(ON);
+                if (flywheel.getState() == Flywheel.States.RESTING){
+                    flywheel.setState(Flywheel.States.SPINNING);
                 }
             }
 
